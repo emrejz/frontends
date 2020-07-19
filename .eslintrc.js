@@ -4,9 +4,11 @@ module.exports = {
     commonjs: true,
     es2020: true,
   },
+  parser: "babel-eslint",
   extends: ["airbnb-base"],
   parserOptions: {
     ecmaVersion: 11,
+    sourceType: "script",
   },
   rules: {
     quotes: ["error", "double"],
