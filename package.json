@@ -1,0 +1,44 @@
+{
+  "name": "ui-cli",
+  "version": "1.0.0",
+  "description": "A simple tool to automate front-end development!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emrejz/ui-cli.git"
+  },
+  "keywords": [
+    "javascript",
+    "js",
+    "cli",
+    "front end",
+    "ui",
+    "client",
+    "helper",
+    "boilerplate",
+    "template",
+    "generate",
+    "react",
+    "router",
+    "state management",
+    "context api",
+    "styled components",
+    "storybook",
+    "sass",
+    "scss",
+    "svg"
+  ],
+  "author": "emre kayacan <emre.kayacan@msn.com> (http://emrejs.surge.sh)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emrejz/ui-cli/issues"
+  },
+  "homepage": "https://github.com/emrejz/ui-cli#readme",
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "inquirer": "^7.3.2"
+  }
+}
