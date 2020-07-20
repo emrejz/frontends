@@ -26,6 +26,12 @@ module.exports = [
   },
   {
     type: "confirm",
+    name: "router",
+    message: "Do you need react-router-dom?",
+    default: false,
+  },
+  {
+    type: "confirm",
     name: "styled",
     message: "Do you need styled-component?",
     default: false,
