@@ -5,27 +5,32 @@ const path = require("path");
 const packagePath = path.join(process.cwd(), "package.json");
 const paths = require("../paths");
 const fs = require("fs-extra");
-
+const relPath = process.cwd();
 module.exports = async (answers) => {
   const { name, scss, styled, storybook, context, svgr, router } = answers;
   try {
-    await fs.copy("lib/react/default", "");
+    console.log(__dirname);
+    console.log(fs.realpathSync(""));
+    console.log(path.resolve(""));
+    console.log(process.cwd());
+    await fs.copy("../../../lib/react/default", relPath);
+
     const myPackage = await JSON.parse(fs.readFileSync(packagePath));
     myPackage.name = name;
 
     if (router) {
-      await fs.copy("lib/react/router", "");
+      await fs.copy("lib/react/router", relPath);
       myPackage.dependencies["react-router-dom"] = "5.2.0";
     }
     if (styled) {
-      await fs.copy("lib/react/styled/default", "");
+      await fs.copy("lib/react/styled/default", relPath);
       myPackage.dependencies = {
         ...myPackage.dependencies,
         "styled-components": "5.1.1",
       };
     }
     if (storybook) {
-      await fs.copy("lib/react/storybook/default", "");
+      await fs.copy("lib/react/storybook/default", relPath);
       myPackage.devDependencies = {
         ...myPackage.devDependencies,
         "@storybook/addon-actions": "5.3.19",
@@ -41,40 +46,40 @@ module.exports = async (answers) => {
       };
     }
     if (context) {
-      await fs.copy("lib/react/store/default", "");
+      await fs.copy("lib/react/store/default", relPath);
       if (styled) {
-        await fs.copy("lib/react/styled/store", "");
+        await fs.copy("lib/react/styled/store", relPath);
         if (router) {
-          await fs.copy("lib/react/styled/store-router", "");
+          await fs.copy("lib/react/styled/store-router", relPath);
         } else if (!router) {
           if (storybook) {
-            await fs.copy("lib/react/styled/storybook-store", "");
+            await fs.copy("lib/react/styled/storybook-store", relPath);
           }
         }
         if (storybook) {
-          await fs.copy("lib/react/styled/storybook-store", "");
+          await fs.copy("lib/react/styled/storybook-store", relPath);
         }
       } else if (!styled) {
         if (storybook) {
-          await fs.copy("lib/react/storybook/store", "");
+          await fs.copy("lib/react/storybook/store", relPath);
         }
         if (router) {
-          await fs.copy("lib/react/store/router", "");
+          await fs.copy("lib/react/store/router", relPath);
         }
       }
     } else if (!context) {
       if (styled) {
         if (storybook) {
-          await fs.copy("lib/react/styled/storybook", "");
+          await fs.copy("lib/react/styled/storybook", relPath);
         }
         if (router) {
-          await fs.copy("lib/react/styled/router", "");
+          await fs.copy("lib/react/styled/router", relPath);
         }
       }
     }
 
     if (svgr) {
-      await fs.copy("lib/react/svgr", "");
+      await fs.copy("lib/react/svgr", relPath);
       myPackage.scripts["icon"] =
         'svgr public/static/svgs -d src/components/icons --icon --replace-attr-values "#fff=currentColor"';
       myPackage.devDependencies = {
@@ -84,13 +89,13 @@ module.exports = async (answers) => {
     }
 
     if (scss) {
-      await fs.copy("lib/react/scss", "");
+      await fs.copy("lib/react/scss", relPath);
       myPackage.dependencies["node-sass"] = "4.14.1";
       if (storybook) {
-        await fs.copy("lib/react/storybook/scss", "");
+        await fs.copy("lib/react/storybook/scss", relPath);
       }
 
-      unlinkCssFile("");
+      unlinkCssFile(relPath);
       await cssToScss(paths);
       await fs.writeFile(packagePath, JSON.stringify(myPackage, null, 4));
     }

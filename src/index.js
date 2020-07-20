@@ -9,7 +9,7 @@ const buildConfig = async () => {
   const answers = await inquirer.prompt(questions);
   createProject(answers);
 };
-if (fs.readdirSync(__dirname).length !== 0) {
+if (fs.readdirSync(process.cwd()).length !== 0) {
   inquirer
     .prompt([
       {
