@@ -1,4 +1,4 @@
-# ** Created by [ui-cli](https://www.npmjs.com/package/ui-cli)**
+# ** Created by [frontends](https://www.npmjs.com/package/frontends)**
 
 ###Available sripts based on your answers
 

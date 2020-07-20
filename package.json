@@ -1,7 +1,7 @@
 {
-  "name": "ui-cli",
+  "name": "frontends",
   "version": "1.0.0",
-  "description": "A simple tool to automate front-end development!",
+  "description": "A simple cli to automate front-end development!",
   "main": "src/index.js",
   "bin": "src/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/emrejz/ui-cli.git"
+    "url": "git+https://github.com/emrejz/frontends.git"
   },
   "keywords": [
     "javascript",
@@ -36,9 +36,9 @@
   "author": "emre kayacan <emre.kayacan@msn.com> (http://emrejs.surge.sh)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/emrejz/ui-cli/issues"
+    "url": "https://github.com/emrejz/frontends/issues"
   },
-  "homepage": "https://github.com/emrejz/ui-cli#readme",
+  "homepage": "https://github.com/emrejz/frontends#readme",
   "dependencies": {
     "fs-extra": "^9.0.1",
     "inquirer": "^7.3.2"

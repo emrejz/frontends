@@ -1,6 +1,6 @@
-# ui-cli
+# frontends cli
 
-A simple tool to automate front-end development!
+A simple cli to automate front-end development!
 
 For now usable for react projects.
 
@@ -18,7 +18,7 @@ svgr
 ## You can run it using npx like this:
 
 ```
-npx ui-cli
+npx frontends
 ```
 
 Questions will come after the command runs. Project will be created ( into your current "directory") according to the your answers
@@ -26,8 +26,8 @@ Questions will come after the command runs. Project will be created ( into your 
 ## You can run it using local like this:
 
 ```
-npm install -g ui-cli
-ui-cli
+npm install -g frontends
+frontends
 ```
 
 Questions will come after the command runs. Project will be created ( into your current "directory") according to the your answers
