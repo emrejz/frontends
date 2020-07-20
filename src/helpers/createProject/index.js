@@ -7,24 +7,22 @@ const paths = require("../paths");
 const fs = require("fs-extra");
 
 module.exports = async (answers) => {
-  const { name, scss, styled, storybook, context, svgr } = answers;
+  const { name, scss, styled, storybook, context, svgr, router } = answers;
   try {
     await fs.copy("lib/react/default", "");
-    const myPackage = JSON.parse(fs.readFileSync(packagePath));
+    const myPackage = await JSON.parse(fs.readFileSync(packagePath));
     myPackage.name = name;
-    context && (await fs.copy("lib/react/store", ""));
+
+    if (router) {
+      await fs.copy("lib/react/router", "");
+      myPackage.dependencies["react-router-dom"] = "5.2.0";
+    }
     if (styled) {
       await fs.copy("lib/react/styled/default", "");
       myPackage.dependencies = {
         ...myPackage.dependencies,
         "styled-components": "5.1.1",
       };
-    }
-    if (svgr) {
-      await fs.copy("lib/react/svgr", "");
-      myPackage.scripts.icon =
-        'svgr public/static/svgs -d src/components/icons --icon --replace-attr-values "#fff=currentColor"';
-      myPackage.devDependencies["@svgr/cli"] = "5.4.0";
     }
     if (storybook) {
       await fs.copy("lib/react/storybook/default", "");
@@ -42,27 +40,62 @@ module.exports = async (answers) => {
         "build-storybook": "build-storybook -s public",
       };
     }
-    storybook && context && (await fs.copy("lib/react/storybook/store", ""));
-    styled && context && (await fs.copy("lib/react/styled/store", ""));
-    styled && storybook && (await fs.copy("lib/react/styled/storybook", ""));
-    styled &&
-      storybook &&
-      context &&
-      (await fs.copy("lib/react/styled/storybook-store", ""));
+    if (context) {
+      await fs.copy("lib/react/store/default", "");
+      if (styled) {
+        await fs.copy("lib/react/styled/store", "");
+        if (router) {
+          await fs.copy("lib/react/styled/store-router", "");
+        } else if (!router) {
+          if (storybook) {
+            await fs.copy("lib/react/styled/storybook-store", "");
+          }
+        }
+        if (storybook) {
+          await fs.copy("lib/react/styled/storybook-store", "");
+        }
+      } else if (!styled) {
+        if (storybook) {
+          await fs.copy("lib/react/storybook/store", "");
+        }
+        if (router) {
+          await fs.copy("lib/react/store/router", "");
+        }
+      }
+    } else if (!context) {
+      if (styled) {
+        if (storybook) {
+          await fs.copy("lib/react/styled/storybook", "");
+        }
+        if (router) {
+          await fs.copy("lib/react/styled/router", "");
+        }
+      }
+    }
+
+    if (svgr) {
+      await fs.copy("lib/react/svgr", "");
+      myPackage.scripts["icon"] =
+        'svgr public/static/svgs -d src/components/icons --icon --replace-attr-values "#fff=currentColor"';
+      myPackage.devDependencies = {
+        ...myPackage.devDependencies,
+        "@svgr/cli": "5.4.0",
+      };
+    }
 
     if (scss) {
       await fs.copy("lib/react/scss", "");
       myPackage.dependencies["node-sass"] = "4.14.1";
-
       if (storybook) {
         await fs.copy("lib/react/storybook/scss", "");
       }
+
       unlinkCssFile("");
       await cssToScss(paths);
       await fs.writeFile(packagePath, JSON.stringify(myPackage, null, 4));
-      success();
-      process.exit(0);
     }
+    success();
+    process.exit(0);
   } catch (err) {
     console.log(err);
     process.exit(1);
